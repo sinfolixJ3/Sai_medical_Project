@@ -44,8 +44,12 @@ public class OrderController {
         OrderDTO savedOrder = orderServiceImpl.createOrder(order, orderProductDTOList);
         return new ResponseEntity<>(savedOrder, HttpStatus.CREATED);
 
-
     }
+//    Get Mapping to get all order list details for that customer
+
+//    Get Mapping for detail of single order
+
+//    Change status of order Status from one state to another
 
 
 }
