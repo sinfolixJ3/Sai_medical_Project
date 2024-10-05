@@ -55,4 +55,21 @@ public class OrderProductServiceImpl implements OrderProductService {
         throw new ResourceNotFoundException("Order Product table", "order id", orderId);
 
     }
+
+    //    getProductListByEmailId
+    @Override
+    public List<ProductListByOrderDTO> getProductListByEmailId(String email_id) {
+
+        List<Order> orderList = orderRepository.findByCustomerEmail(email_id);
+        List<ProductListByOrderDTO> productList = new ArrayList<>();
+        for (Order order : orderList) {
+            long orderId = order.getId();
+            ProductListByOrderDTO productListByOrderDTO = getProductListByOrderId(orderId);
+            productList.add(productListByOrderDTO);
+        }
+        return productList;
+
+    }
+
+
 }
