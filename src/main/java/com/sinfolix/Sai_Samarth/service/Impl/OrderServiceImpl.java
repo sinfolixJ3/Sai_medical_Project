@@ -12,6 +12,7 @@ import com.sinfolix.Sai_Samarth.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -50,7 +51,14 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<OrderDTO> getOrderListByCustomerEmail(String customerEmail) {
-        return List.of();
+        List<Order> orderList = this.orderRepository.findByCustomerEmail(customerEmail);
+        List<OrderDTO> orderDTOS = new ArrayList<>();
+        if (orderList.size() != 0) {
+            for (Order order : orderList) {
+                orderDTOS.add(OrderToOrderDTO(order));
+            }
+        }
+        return orderDTOS;
     }
 
     @Override

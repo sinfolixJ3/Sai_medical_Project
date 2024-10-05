@@ -8,10 +8,7 @@ import com.sinfolix.Sai_Samarth.service.Impl.OrderServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -45,9 +42,17 @@ public class OrderController {
         return new ResponseEntity<>(savedOrder, HttpStatus.CREATED);
 
     }
-//    Get Mapping to get all order list details for that customer
 
-//    Get Mapping for detail of single order
+    //    Get Mapping to get all order list details for that customer email
+    @GetMapping("/customer/{customerEmail}")
+    public ResponseEntity<List<OrderDTO>> getOrdersByCustomerEmail(@PathVariable String customerEmail) {
+        List<OrderDTO> orderList = orderServiceImpl.getOrderListByCustomerEmail(customerEmail);
+        return ResponseEntity.ok(orderList);
+    }
+
+
+//    Get Mapping for detail of single order by Id
+
 
 //    Change status of order Status from one state to another
 

@@ -27,23 +27,24 @@ public class ProductCatlogueServiceImpl implements ProductCatlogueService {
 
     @Override
     public ProductCatlogueDTO updateProductCatlogue(ProductCatlogueDTO product, Integer productId) {
-    // Implement logic to update product in the database and return updated DTO
-        ProductCatlogue productCatlogue = this.productCatlogueRepo.findById(productId).orElseThrow(()-> new ResourceNotFoundException("Product Catlogue","ID ",productId));
+        // Implement logic to update product in the database and return updated DTO
+        ProductCatlogue productCatlogue = this.productCatlogueRepo.findById(productId).orElseThrow(() -> new ResourceNotFoundException("Product Catlogue", "ID ", productId));
         productCatlogue.setQuantity(product.getQuantity());
         productCatlogue.setPrice(product.getPrice());
-        productCatlogue.setDiscount(product.getRealMrp()-product.getDiscountMrp());
+        productCatlogue.setDiscount(product.getRealMrp() - product.getDiscountMrp());
         productCatlogue.setCompanyName(product.getCompanyName());
         productCatlogue.setMedicineName(product.getMedicineName());
         productCatlogue.setMinAge(product.getMinAge());
         productCatlogue.setMaxAge(product.getMaxAge());
         productCatlogue.setRealMrp(product.getRealMrp());
         productCatlogue.setDiscountMpr(product.getDiscountMrp());
+        productCatlogue.setEnabled(product.getEnabled());
         return productCatlogueToDTO(this.productCatlogueRepo.save(productCatlogue));
     }
 
     @Override
     public ProductCatlogueDTO getProductCatlogueById(Integer productId) {
-        ProductCatlogue productCatlogue = this.productCatlogueRepo.findById(productId).orElseThrow(()-> new ResourceNotFoundException("Product Catlogue","ID ",productId));
+        ProductCatlogue productCatlogue = this.productCatlogueRepo.findById(productId).orElseThrow(() -> new ResourceNotFoundException("Product Catlogue", "ID ", productId));
 
         return productCatlogueToDTO(productCatlogue);
     }
@@ -51,15 +52,26 @@ public class ProductCatlogueServiceImpl implements ProductCatlogueService {
     @Override
     public List<ProductCatlogueDTO> getAllProductCatlogue() {
         List<ProductCatlogue> productCatlogue = this.productCatlogueRepo.findAll();
-        List<ProductCatlogueDTO> productCatlogueDto=productCatlogue.stream().map(e -> this.productCatlogueToDTO(e)).collect(Collectors.toList());
+        List<ProductCatlogueDTO> productCatlogueDto = productCatlogue.stream().map(e -> this.productCatlogueToDTO(e)).collect(Collectors.toList());
 
 
         return productCatlogueDto;
     }
 
+    //    getAllEnabledProductCatlogue
+    @Override
+    public List<ProductCatlogueDTO> getAllEnabledProductCatlogue() {
+        List<ProductCatlogue> productCatlogue = this.productCatlogueRepo.findByEnabledTrue();
+        List<ProductCatlogueDTO> productCatlogueDto = productCatlogue.stream().map(e -> this.productCatlogueToDTO(e)).collect(Collectors.toList());
+
+
+        return productCatlogueDto;
+    }
+
+
     @Override
     public void deleteProductCatlogue(Integer productId) {
-        ProductCatlogue productCatlogue = this.productCatlogueRepo.findById(productId).orElseThrow(()-> new ResourceNotFoundException("Product Catlogue","ID ",productId));
+        ProductCatlogue productCatlogue = this.productCatlogueRepo.findById(productId).orElseThrow(() -> new ResourceNotFoundException("Product Catlogue", "ID ", productId));
         this.productCatlogueRepo.delete(productCatlogue);
     }
 
@@ -70,13 +82,14 @@ public class ProductCatlogueServiceImpl implements ProductCatlogueService {
         productCatlogue.setId(productCatlogueDTO.getId());
         productCatlogue.setQuantity(productCatlogueDTO.getQuantity());
         productCatlogue.setPrice(productCatlogueDTO.getPrice());
-        productCatlogue.setDiscount(productCatlogueDTO.getRealMrp()-productCatlogueDTO.getDiscountMrp());
+        productCatlogue.setDiscount(productCatlogueDTO.getRealMrp() - productCatlogueDTO.getDiscountMrp());
         productCatlogue.setCompanyName(productCatlogueDTO.getCompanyName());
         productCatlogue.setMedicineName(productCatlogueDTO.getMedicineName());
         productCatlogue.setMinAge(productCatlogueDTO.getMinAge());
         productCatlogue.setMaxAge(productCatlogueDTO.getMaxAge());
         productCatlogue.setRealMrp(productCatlogueDTO.getRealMrp());
         productCatlogue.setDiscountMpr(productCatlogueDTO.getDiscountMrp());
+        productCatlogue.setEnabled(productCatlogueDTO.getEnabled());
 
         return productCatlogue;
 
@@ -96,6 +109,7 @@ public class ProductCatlogueServiceImpl implements ProductCatlogueService {
         productCatlogueDTO.setMaxAge(productCatlogue.getMaxAge());
         productCatlogueDTO.setRealMrp(productCatlogue.getRealMrp());
         productCatlogueDTO.setDiscountMrp(productCatlogue.getDiscountMpr());
+        productCatlogueDTO.setEnabled(productCatlogue.getEnabled());
 
         return productCatlogueDTO;
     }

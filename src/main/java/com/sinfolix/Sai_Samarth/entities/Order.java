@@ -1,9 +1,11 @@
 package com.sinfolix.Sai_Samarth.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @Entity
@@ -30,4 +32,8 @@ public class Order {
 
     @Column(name = "status")
     private int status;
+
+    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
+    @JsonIgnore  // Avoid lazy-loading issues during serialization
+    private List<OrderProduct> orderProducts;
 }

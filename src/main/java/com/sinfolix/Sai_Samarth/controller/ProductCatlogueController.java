@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/product-catalogue")// Mapping the API endpoint to root URL
@@ -22,7 +21,7 @@ public class ProductCatlogueController {
 
     //post -create product catlogue
     @PostMapping("/")
-    public ResponseEntity<ProductCatlogueDTO> createProductCatlogue(@RequestBody ProductCatlogueDTO productCatlogueDTO){
+    public ResponseEntity<ProductCatlogueDTO> createProductCatlogue(@RequestBody ProductCatlogueDTO productCatlogueDTO) {
         ProductCatlogueDTO createproductCatlogueDTO = this.productCatlogueService.createProductCatlogue(productCatlogueDTO);
         return new ResponseEntity<>(createproductCatlogueDTO, HttpStatus.CREATED);
     }
@@ -31,24 +30,33 @@ public class ProductCatlogueController {
 //    Put update product catlogue
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProductCatlogueDTO> updateProductCatlogue(@PathVariable int id, @RequestBody ProductCatlogueDTO productCatlogueDTO){
+    public ResponseEntity<ProductCatlogueDTO> updateProductCatlogue(@PathVariable int id, @RequestBody ProductCatlogueDTO productCatlogueDTO) {
         ProductCatlogueDTO updatedProductCatlogueDTO = this.productCatlogueService.updateProductCatlogue(productCatlogueDTO, id);
         return new ResponseEntity<>(updatedProductCatlogueDTO, HttpStatus.OK);
 //        or return ResponseEntity.ok(updatedProductCatlogueDTO);
     }
-//    DELETE delete catlogue
+
+    //    DELETE  catlogue
+//    NOTE : Never Use this API
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse> deleteProductCatlogue(@PathVariable int id){
+    public ResponseEntity<ApiResponse> deleteProductCatlogue(@PathVariable int id) {
         this.productCatlogueService.deleteProductCatlogue(id);
-        return ResponseEntity.ok(new ApiResponse("User Deleted Successfully",true));
+        return ResponseEntity.ok(new ApiResponse("User Deleted Successfully", true));
     }
-//    Get - user catlogue
+
+    //    Get - user catlogue all Productes that are available irrespective of Status(enabled/disabled)
     @GetMapping("/")
-    public ResponseEntity<List<ProductCatlogueDTO>> getAllUser(){
+    public ResponseEntity<List<ProductCatlogueDTO>> getAllUser() {
         return ResponseEntity.ok(this.productCatlogueService.getAllProductCatlogue());
     }
+
+    @GetMapping("/enabled")
+    public ResponseEntity<List<ProductCatlogueDTO>> getEnabledAllUser() {
+        return ResponseEntity.ok(this.productCatlogueService.getAllEnabledProductCatlogue());
+    }
+
     @GetMapping("/{id}")
-    public ResponseEntity<ProductCatlogueDTO> getUserById(@PathVariable int id){
+    public ResponseEntity<ProductCatlogueDTO> getUserById(@PathVariable int id) {
         return ResponseEntity.ok(this.productCatlogueService.getProductCatlogueById(id));
     }
 }
