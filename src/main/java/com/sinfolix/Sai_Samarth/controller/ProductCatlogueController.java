@@ -2,6 +2,7 @@ package com.sinfolix.Sai_Samarth.controller;
 
 import com.sinfolix.Sai_Samarth.DTO.ApiResponse;
 import com.sinfolix.Sai_Samarth.DTO.ProductCatlogueDTO;
+import com.sinfolix.Sai_Samarth.entities.ProductCatlogue;
 import com.sinfolix.Sai_Samarth.service.Impl.ProductCatlogueServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/product-catalogue")// Mapping the API endpoint to root URL
@@ -41,6 +41,18 @@ public class ProductCatlogueController {
     public ResponseEntity<ApiResponse> deleteProductCatlogue(@PathVariable int id){
         this.productCatlogueService.deleteProductCatlogue(id);
         return ResponseEntity.ok(new ApiResponse("User Deleted Successfully",true));
+    }
+
+//    DISABLE disable the product
+    @PatchMapping("/{id}/disable")
+    public void disableProduct(@PathVariable int id){
+        productCatlogueService.disableProduct(id);
+    }
+
+//    ADD COMMENT add comment
+    @PatchMapping("/{id}/comment")
+    public ProductCatlogue addComment(@PathVariable Integer id, @RequestBody String comment){
+        return productCatlogueService.addComment(id,comment );
     }
 //    Get - user catlogue
     @GetMapping("/")
