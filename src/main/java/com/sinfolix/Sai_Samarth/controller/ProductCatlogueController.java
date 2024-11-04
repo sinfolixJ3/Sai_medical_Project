@@ -17,7 +17,7 @@ import java.util.Map;
 //@Api(value = "Product Catlogue API", description = "API for managing product catalogue") //This annotation is used for documenting the API, typically with Swagger or similar tools. The value provides a brief title, while the description gives more context about what the API does.
 //@Tag(name = "Product Catlogue API")  // Adding a tag to the API documentation
 public class ProductCatlogueController {
-    @Autowired
+     @Autowired
     ProductCatlogueServiceImpl productCatlogueService;
 
     //post -create product catlogue
@@ -42,6 +42,18 @@ public class ProductCatlogueController {
         this.productCatlogueService.deleteProductCatlogue(id);
         return ResponseEntity.ok(new ApiResponse("User Deleted Successfully",true));
     }
+
+//    DISABLE disable the product
+    @PatchMapping("/{id}/disable")
+    public void disableProduct(@PathVariable int id){
+        productCatlogueService.disableProduct(id);
+    }
+
+//    ADD COMMENT add comment
+//    @PatchMapping("/{id}/comment")
+//    public ProductCatlogue addComment(@PathVariable Integer id, @RequestBody String comment){
+//        return productCatlogueService.addComment(id,comment );
+//    }
 //    Get - user catlogue
     @GetMapping("/")
     public ResponseEntity<List<ProductCatlogueDTO>> getAllUser(){
