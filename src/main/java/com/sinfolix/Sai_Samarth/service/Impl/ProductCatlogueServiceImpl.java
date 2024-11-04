@@ -70,15 +70,6 @@ public class ProductCatlogueServiceImpl implements ProductCatlogueService {
         productCatlogueRepo.save(productCatlogue);
     }
 
-    @Override
-    public ProductCatlogue addComment(Integer id, String comment) {
-
-        ProductCatlogue productCatlogue = productCatlogueRepo.findById(id).orElseThrow();
-        productCatlogue.getComments().concat(comment);
-        return productCatlogueRepo.save(productCatlogue);
-
-    }
-
     private ProductCatlogue DTOtoProductCatlogue(ProductCatlogueDTO productCatlogueDTO) {
         ProductCatlogue productCatlogue = new ProductCatlogue();
         // Mapping fields from DTO to Entity
