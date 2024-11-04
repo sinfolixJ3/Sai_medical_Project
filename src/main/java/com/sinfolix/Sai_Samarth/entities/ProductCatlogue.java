@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 public class ProductCatlogue {
 
-    @Id
+   @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
@@ -37,9 +37,20 @@ public class ProductCatlogue {
     @Column(name = "real_mrp",nullable = false)
     private int realMrp;
 
-    @Column(name = "discount_mpr",nullable = false)
+    @Column(name = "discount_mrp",nullable = false)
     private int discountMpr;
 
+    @Column(name = "prod_description", nullable = false)
+    private String prodDescription;
+
+    @Column(name = "disabled")
+    private boolean disabled;
+
+    @Column(name = "comments" )
+    private String comments;
+
+    @Column(name = "product_image", nullable = false)
+    private String image;
 
 
 }
