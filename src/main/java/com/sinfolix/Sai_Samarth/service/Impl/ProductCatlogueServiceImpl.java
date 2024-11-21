@@ -63,11 +63,19 @@ public class ProductCatlogueServiceImpl implements ProductCatlogueService {
         this.productCatlogueRepo.delete(productCatlogue);
     }
 
+    @Override
+    public void disableProduct(Integer id) {
+        ProductCatlogue productCatlogue = productCatlogueRepo.findById(id).orElseThrow();
+        productCatlogue.setDisabled(true);
+        productCatlogueRepo.save(productCatlogue);
+    }
+
     private ProductCatlogue DTOtoProductCatlogue(ProductCatlogueDTO productCatlogueDTO) {
         ProductCatlogue productCatlogue = new ProductCatlogue();
         // Mapping fields from DTO to Entity
 
         productCatlogue.setId(productCatlogueDTO.getId());
+        productCatlogue.setImage(productCatlogueDTO.getImage());
         productCatlogue.setQuantity(productCatlogueDTO.getQuantity());
         productCatlogue.setPrice(productCatlogueDTO.getPrice());
         productCatlogue.setDiscount(productCatlogueDTO.getRealMrp()-productCatlogueDTO.getDiscountMrp());
@@ -77,6 +85,9 @@ public class ProductCatlogueServiceImpl implements ProductCatlogueService {
         productCatlogue.setMaxAge(productCatlogueDTO.getMaxAge());
         productCatlogue.setRealMrp(productCatlogueDTO.getRealMrp());
         productCatlogue.setDiscountMpr(productCatlogueDTO.getDiscountMrp());
+        productCatlogue.setProdDescription(productCatlogueDTO.getProdDescription());
+        productCatlogue.setDisabled(productCatlogueDTO.isDisabled());
+        productCatlogue.setComments(productCatlogueDTO.getComments());
 
         return productCatlogue;
 
@@ -96,6 +107,9 @@ public class ProductCatlogueServiceImpl implements ProductCatlogueService {
         productCatlogueDTO.setMaxAge(productCatlogue.getMaxAge());
         productCatlogueDTO.setRealMrp(productCatlogue.getRealMrp());
         productCatlogueDTO.setDiscountMrp(productCatlogue.getDiscountMpr());
+        productCatlogueDTO.setProdDescription(productCatlogue.getProdDescription());
+        productCatlogueDTO.setDisabled(productCatlogue.isDisabled());
+        productCatlogueDTO.setComments(productCatlogue.getComments());
 
         return productCatlogueDTO;
     }

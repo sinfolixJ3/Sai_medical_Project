@@ -10,26 +10,19 @@ import lombok.Data;
 public class ProductCatlogueDTO {
 
     private int id;
-
+    private String image;
     private int quantity;
-
     private int price;
-
     private int discount;
-
     private String companyName;
-
     private String medicineName;
-
-
     private int minAge;
-
     private int maxAge;
-
     private int realMrp;
-
     private int discountMrp;
-
+    private String prodDescription;
+    private boolean disabled;
+    private String comments;
 
 
 }

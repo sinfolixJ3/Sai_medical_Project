@@ -11,4 +11,5 @@ public interface ProductCatlogueService {
     ProductCatlogueDTO getProductCatlogueById(Integer ProductId);
     List<ProductCatlogueDTO> getAllProductCatlogue();
     void deleteProductCatlogue(Integer ProductId);
+    void disableProduct(Integer id);
 }
